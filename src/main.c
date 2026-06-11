@@ -9,7 +9,6 @@ int main() {
 
   Texture2D menu_bg = LoadTexture("assets/textures/backgrounds/menu_bg.png");
   Texture2D title = LoadTexture("assets/textures/ui/titles/crystal_collector.png");
-  Texture2D dim = LoadTexture("assets/textures/ui/effects/dim_effect_full.png");
 
   while (!WindowShouldClose()) {
     BeginDrawing();
@@ -23,13 +22,12 @@ int main() {
       WHITE             
     );
 
-    DrawTexturePro(
-      dim,
-      (Rectangle){ 0, 0, dim.width, dim.height }, 
-      (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() },
-      (Vector2){ 0, 0 },  
-      0.0f,              
-      WHITE             
+    DrawRectangle(
+      0,
+      0,
+      GetScreenWidth(),
+      GetScreenHeight(),
+      Color{0, 0, 0, 120}
     );
 
     DrawTexture(title, ((WIDTH / 2) - (title.width / 2)), 25, WHITE);
@@ -37,7 +35,6 @@ int main() {
     EndDrawing();
   }
 
-  UnloadTexture(dim);
   UnloadTexture(title);
   UnloadTexture(menu_bg);
   CloseWindow();

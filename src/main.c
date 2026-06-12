@@ -33,8 +33,9 @@ int main() {
       0.0f,              
       GRAY             
     );
-
     DrawTexture(title, (maxwidth / 2) - (title.width / 2), 20, WHITE);
+    char *msg = "2nd GUI Project! Version 0.3.1";
+    DrawText(msg, (GetScreenWidth() / 2) - (MeasureText(msg, 20) / 2), title.height + 28, 20, WHITE);
     
     int distance = 0;
     for (int i = 0; i < 4; i++) {

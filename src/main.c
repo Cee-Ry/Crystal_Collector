@@ -26,14 +26,6 @@ int main() {
       GRAY             
     );
 
-    // DrawRectangle(
-    //   0,
-    //   0,
-    //   GetScreenWidth(),
-    //   GetScreenHeight(),
-    //   (Color){0, 0, 0, 120}
-    // );
-
     DrawTexture(title, ((WIDTH / 2) - (title.width / 2)), 25, WHITE);
     
     int distance = 0;

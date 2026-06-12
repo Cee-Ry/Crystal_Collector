@@ -3,6 +3,7 @@
 int main() {
   const int WIDTH = 1280;
   const int HEIGHT = 720;
+  bool run = true;
 
   InitWindow(WIDTH, HEIGHT, "Crystal Collector");
   SetTargetFPS(60);
@@ -16,7 +17,7 @@ int main() {
   buttons[2] = LoadTexture("assets/textures/ui/buttons/credits.png");
   buttons[3] = LoadTexture("assets/textures/ui/buttons/exit.png");
 
-  while (!WindowShouldClose()) {
+  while (run) {
     DrawTexturePro(
       menu_bg,
       (Rectangle){ 0, 0, menu_bg.width, menu_bg.height }, 
@@ -35,6 +36,7 @@ int main() {
 
       Rectangle bounds = { x, y, buttons[i].width, buttons[i].height };
       bool hovered = CheckCollisionPointRec(GetMousePosition(), bounds);
+      bool clicked = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 
       if (hovered) {
         DrawTexturePro(
@@ -44,7 +46,12 @@ int main() {
           (Vector2){ 0, 0 },  
           0.0f,              
           (Color){ 0, 255, 255, 255 }
-        );
+          );
+
+        if (clicked && i == 0);
+        if (clicked && i == 1);
+        if (clicked && i == 2);
+        else if (clicked && i == 3) run = false;
       } else {
         DrawTexture(buttons[i], x, y, WHITE);
       }

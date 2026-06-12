@@ -4,19 +4,26 @@ int main() {
   const int WIDTH = 1024;
   const int HEIGHT = 576;
   bool run = true;
+  int state = 0;
 
   // SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WIDTH, HEIGHT, "Crystal Collector");
-  SetTargetFPS(60);
+  SetTargetFPS(40);
 
+  //menu
   Texture2D menu_bg = LoadTexture("assets/textures/backgrounds/menu_bg.png");
   Texture2D title = LoadTexture("assets/textures/ui/titles/crystal_collector.png");
-  Texture2D buttons[4];
+  Texture2D buttons[5];
 
   buttons[0] = LoadTexture("assets/textures/ui/buttons/play.png");
   buttons[1] = LoadTexture("assets/textures/ui/buttons/settings.png");
   buttons[2] = LoadTexture("assets/textures/ui/buttons/credits.png");
   buttons[3] = LoadTexture("assets/textures/ui/buttons/exit.png");
+  buttons[4] = LoadTexture("assets/textures/ui/buttons/back.png");
+
+  // credits
+  Texture2D credits = LoadTexture("assets/textures/ui/dashboards/credits.png");
+  Texture2D credits_title = LoadTexture("assets/textures/ui/title/credits_txt.png");
 
   while (run) {
     int maxwidth = GetScreenWidth();
@@ -33,6 +40,8 @@ int main() {
       0.0f,              
       GRAY             
     );
+
+    if (state == 0) {
     DrawTexture(title, (maxwidth / 2) - (title.width / 2), 20, WHITE);
     char *msg = "2nd GUI Project! Version 0.3.1";
     DrawText(msg, (GetScreenWidth() / 2) - (MeasureText(msg, 20) / 2), title.height + 28, 20, WHITE);
@@ -56,20 +65,51 @@ int main() {
           (Color){ 0, 255, 255, 255 }
           );
 
-        if (clicked && i == 0);
-        if (clicked && i == 1);
-        if (clicked && i == 2);
-        else if (clicked && i == 3) run = false;
+        if (clicked && i == 0) state = 1;
+        if (clicked && i == 1) state = 2;
+        if (clicked && i == 2) state = 3;
+        else if (clicked && i == 3) state = 4;
       } else {
         DrawTexture(buttons[i], x, y, WHITE);
       }
         
       distance += 90;
     }
+    }
+
+    int x = GetScreenWidth();
+    int y = GetScreenHeight();
+
+    switch (state) {
+      case 1:
+        break;
+
+      case 2:
+        break;
+
+      case 3:
+        DrawTexturePro(
+          credits,
+          (Rectangle){ 0, 0, credits.width, credits.height}, 
+          (Rectangle){ 0, 0, credits.width + 16, credits.height + 16}, 
+          (Vector2){ 0, 0 },  
+          0.0f,              
+          WHITE             
+        );
+
+        DrawTexture(credits_title, (maxwidth / 2) - (credits_title.width / 2), 20, WHITE);
+        break;
+
+      case 4: run = false; break;
+
+      default:
+        break;
+    }
+
     EndDrawing();
   }
 
-  for (int i = 0; i < 4; i++) UnloadTexture(buttons[i]);
+  for (int i = 0; i < 5; i++) UnloadTexture(buttons[i]);
   UnloadTexture(title);
   UnloadTexture(menu_bg);
   CloseWindow();

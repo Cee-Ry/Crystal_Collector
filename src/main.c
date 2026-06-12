@@ -4,17 +4,17 @@ int main() {
   const int WIDTH = 1280;
   const int HEIGHT = 720;
 
-  InitWindow(WIDTH, HEIGHT, "CRYSTAL COLLECTOR");
+  InitWindow(WIDTH, HEIGHT, "Crystal Collector");
   SetTargetFPS(60);
 
   Texture2D menu_bg = LoadTexture("assets/textures/backgrounds/menu_bg.png");
   Texture2D title = LoadTexture("assets/textures/ui/titles/crystal_collector.png");
-  Texture2D menu[4];
+  Texture2D buttons[4];
 
-  menu[0] = LoadTexture("assets/textures/ui/buttons/play.png");
-  menu[1] = LoadTexture("assets/textures/ui/buttons/settings.png");
-  menu[2] = LoadTexture("assets/textures/ui/buttons/credits.png");
-  menu[3] = LoadTexture("assets/textures/ui/buttons/exit.png");
+  buttons[0] = LoadTexture("assets/textures/ui/buttons/play.png");
+  buttons[1] = LoadTexture("assets/textures/ui/buttons/settings.png");
+  buttons[2] = LoadTexture("assets/textures/ui/buttons/credits.png");
+  buttons[3] = LoadTexture("assets/textures/ui/buttons/exit.png");
 
   while (!WindowShouldClose()) {
     BeginDrawing();
@@ -40,14 +40,14 @@ int main() {
 
     int distance = 0;
     for (int i = 0; i < 4; i++) {
-      DrawTexture(menu[i], ((WIDTH / 2) - (menu[i].width / 2)), (HEIGHT / 2) + distance, WHITE);
+      DrawTexture(buttons[i], ((WIDTH / 2) - (buttons[i].width / 2)), (HEIGHT / 2) + distance, WHITE);
       distance += 90;
     }
 
     EndDrawing();
   }
 
-  for (int i = 0; i < 4; i++) UnloadTexture(menu[i]);
+  for (int i = 0; i < 4; i++) UnloadTexture(buttons[i]);
   UnloadTexture(title);
   UnloadTexture(menu_bg);
   CloseWindow();

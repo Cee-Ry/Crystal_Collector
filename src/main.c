@@ -17,33 +17,50 @@ int main() {
   buttons[3] = LoadTexture("assets/textures/ui/buttons/exit.png");
 
   while (!WindowShouldClose()) {
-    BeginDrawing();
-
     DrawTexturePro(
       menu_bg,
       (Rectangle){ 0, 0, menu_bg.width, menu_bg.height }, 
       (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() },
       (Vector2){ 0, 0 },  
       0.0f,              
-      WHITE             
+      GRAY             
     );
 
-    DrawRectangle(
-      0,
-      0,
-      GetScreenWidth(),
-      GetScreenHeight(),
-      (Color){0, 0, 0, 120}
-    );
+    // DrawRectangle(
+    //   0,
+    //   0,
+    //   GetScreenWidth(),
+    //   GetScreenHeight(),
+    //   (Color){0, 0, 0, 120}
+    // );
 
     DrawTexture(title, ((WIDTH / 2) - (title.width / 2)), 25, WHITE);
-
+    
     int distance = 0;
     for (int i = 0; i < 4; i++) {
-      DrawTexture(buttons[i], ((WIDTH / 2) - (buttons[i].width / 2)), (HEIGHT / 2) + distance, WHITE);
+      float x = (WIDTH / 2) - (buttons[i].width / 2);
+      float y = (HEIGHT / 2) + distance;
+
+      Rectangle bounds = { x, y, buttons[i].width, buttons[i].height };
+      bool hovered = CheckCollisionPointRec(GetMousePosition(), bounds);
+
+      if (hovered) {
+        DrawTexturePro(
+          buttons[i],
+          (Rectangle){ 0, 0, buttons[i].width, buttons[i].height}, 
+          (Rectangle){ x - 8, y - 8, buttons[i].width + 16, buttons[i].height + 16}, 
+          (Vector2){ 0, 0 },  
+          0.0f,              
+          (Color){ 0, 255, 255, 255 }
+        );
+      } else {
+        DrawTexture(buttons[i], x, y, WHITE);
+      }
+        
       distance += 90;
     }
 
+    BeginDrawing();
     EndDrawing();
   }
 

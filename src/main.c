@@ -1,10 +1,11 @@
 #include "raylib.h"
 
 int main() {
-  const int WIDTH = 1280;
-  const int HEIGHT = 720;
+  const int WIDTH = 1024;
+  const int HEIGHT = 576;
   bool run = true;
 
+  // SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WIDTH, HEIGHT, "Crystal Collector");
   SetTargetFPS(60);
 
@@ -18,6 +19,12 @@ int main() {
   buttons[3] = LoadTexture("assets/textures/ui/buttons/exit.png");
 
   while (run) {
+    int maxwidth = GetScreenWidth();
+    int maxheight = GetScreenHeight();
+
+    BeginDrawing();
+    ClearBackground(BLACK);
+
     DrawTexturePro(
       menu_bg,
       (Rectangle){ 0, 0, menu_bg.width, menu_bg.height }, 
@@ -27,12 +34,12 @@ int main() {
       GRAY             
     );
 
-    DrawTexture(title, ((WIDTH / 2) - (title.width / 2)), 25, WHITE);
+    DrawTexture(title, (maxwidth / 2) - (title.width / 2), 20, WHITE);
     
     int distance = 0;
     for (int i = 0; i < 4; i++) {
-      float x = (WIDTH / 2) - (buttons[i].width / 2);
-      float y = (HEIGHT / 2) + distance;
+      int x = (maxwidth / 2) - (buttons[i].width / 2);
+      int y = maxheight - (90 * 4) + distance;
 
       Rectangle bounds = { x, y, buttons[i].width, buttons[i].height };
       bool hovered = CheckCollisionPointRec(GetMousePosition(), bounds);
@@ -58,8 +65,6 @@ int main() {
         
       distance += 90;
     }
-
-    BeginDrawing();
     EndDrawing();
   }
 

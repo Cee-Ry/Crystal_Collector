@@ -29,6 +29,13 @@ int main() {
   // play mode textures
   Texture2D player_idle = LoadTexture("assets/textures/player/idle.png");
   Texture2D player_walk = LoadTexture("assets/textures/player/idle.png");
+  Texture2D blue_crystal = LoadTexture("assets/textures/collectables/crystal_blue.png");
+  Texture2D gold_crystal = LoadTexture("assets/textures/collectables/crystal_gold.png");
+  Texture2D purple_crystal = LoadTexture("assets/textures/collectables/crystal_purple.png");
+
+
+    int x = (GetScreenWidth() / 2) - (player_idle.width / 2);
+    int y = (GetScreenHeight() / 2) - (player_idle.height / 2);
 
   while (run) {
     int maxwidth = GetScreenWidth();
@@ -84,12 +91,20 @@ int main() {
     }
     }
 
-    int x = (maxwidth / 2);
-    int y = (maxheight / 2);
-
     switch (state) {
       case 1:
         playing = true;
+
+        if (IsKeyDown(KEY_W)) y -= 5; 
+        if (IsKeyDown(KEY_A)) x -= 5; 
+        if (IsKeyDown(KEY_S)) y += 5; 
+        if (IsKeyDown(KEY_D)) x += 5; 
+
+        if (y < 0) y = 0;
+        if (y > GetScreenHeight() - 30) y = (GetScreenHeight() - 30);
+        if (x < 0) x = 0;
+        if (x > GetScreenWidth() - 20) x = (GetScreenWidth() - 20);
+
         DrawRectangle(
           0, 0,
           GetScreenWidth(), 
@@ -97,7 +112,7 @@ int main() {
           GREEN             
         );
 
-        DrawTexture(player_idle, x - (player_idle.width /2), y - (player_idle.height / 2), WHITE);
+        DrawTexture(player_idle, x, y, WHITE);
 
         break;
 
@@ -105,8 +120,8 @@ int main() {
         break;
 
       case 3:
-        x -= (credits.width / 2); 
-        y -= ((credits.height / 2) + 20);
+        x = (GetScreenWidth() / 2) - (credits.width / 2);
+        y = (GetScreenHeight() / 2) - ((credits.height / 2) + 20);
 
         DrawTexture(credits_title, (maxwidth / 2) - (credits_title.width / 2), 20, WHITE);
 

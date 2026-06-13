@@ -23,7 +23,7 @@ int main() {
 
   // credits
   Texture2D credits = LoadTexture("assets/textures/ui/dashboards/credits.png");
-  Texture2D credits_title = LoadTexture("assets/textures/ui/title/credits_txt.png");
+  Texture2D credits_title = LoadTexture("assets/textures/ui/titles/credits_txt.png");
 
   while (run) {
     int maxwidth = GetScreenWidth();
@@ -77,8 +77,8 @@ int main() {
     }
     }
 
-    int x = GetScreenWidth();
-    int y = GetScreenHeight();
+    int x = (maxwidth / 2);
+    int y = (maxheight / 2);
 
     switch (state) {
       case 1:
@@ -88,16 +88,38 @@ int main() {
         break;
 
       case 3:
+        x -= (credits.width / 2); 
+        y -= ((credits.height / 2) + 20);
+
+        DrawTexture(credits_title, (maxwidth / 2) - (credits_title.width / 2), 20, WHITE);
+
         DrawTexturePro(
           credits,
-          (Rectangle){ 0, 0, credits.width, credits.height}, 
-          (Rectangle){ 0, 0, credits.width + 16, credits.height + 16}, 
+          (Rectangle){ 0, 0, credits.width, credits.height}, (Rectangle){ x, y, credits.width, credits.height}, 
           (Vector2){ 0, 0 },  
           0.0f,              
           WHITE             
         );
 
-        DrawTexture(credits_title, (maxwidth / 2) - (credits_title.width / 2), 20, WHITE);
+        x = (maxwidth / 2) - (buttons[4].width / 2);
+        y = maxheight - 100;
+
+        Rectangle bounds = { x, y, buttons[4].width, buttons[4].height };
+        bool hovered = CheckCollisionPointRec(GetMousePosition(), bounds);
+        bool clicked = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+
+        if (hovered) {
+          DrawTexturePro(
+            buttons[4],
+            (Rectangle){ 0, 0, buttons[4].width, buttons[4].height}, 
+            (Rectangle){ x - 8, y - 8, buttons[4].width + 16, buttons[4].height + 16}, 
+            (Vector2){ 0, 0 },  
+            0.0f,              
+            (Color){ 0, 255, 255, 255 }
+            );
+        } else {
+          DrawTexture(buttons[4], x, y, WHITE);
+        }
         break;
 
       case 4: run = false; break;

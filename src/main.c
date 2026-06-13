@@ -113,6 +113,10 @@ int main() {
         if (IsKeyDown(KEY_A)) x -= 5; 
         if (IsKeyDown(KEY_S)) y += 5; 
         if (IsKeyDown(KEY_D)) x += 5; 
+        if (IsKeyDown(KEY_UP)) y -= 5; 
+        if (IsKeyDown(KEY_LEFT)) x -= 5; 
+        if (IsKeyDown(KEY_DOWN)) y += 5; 
+        if (IsKeyDown(KEY_RIGHT)) x += 5; 
 
         if (y < 0) y = 0;
         if (y > GetScreenHeight() - 30) y = (GetScreenHeight() - 30);
@@ -187,6 +191,10 @@ int main() {
     EndDrawing();
   }
 
+  UnloadTexture(purple_crystal);
+  UnloadTexture(gold_crystal);
+  UnloadTexture(blue_crystal);
+  UnloadTexture(player_walk);
   UnloadTexture(player_idle);
   UnloadTexture(credits_title);
   UnloadTexture(credits);

@@ -1,4 +1,6 @@
 #include "raylib.h"
+#include "time.h"
+#include "stdlib.h"
 
 int main() {
   const int WIDTH = 1024;
@@ -6,6 +8,10 @@ int main() {
   bool run = true;
   bool playing = false;
   int state = 0;
+  int printed_crytal = 0;
+
+  // seed for rand()
+  srand(time(NULL));
 
   // SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WIDTH, HEIGHT, "Crystal Collector");
@@ -32,6 +38,14 @@ int main() {
   Texture2D blue_crystal = LoadTexture("assets/textures/collectables/crystal_blue.png");
   Texture2D gold_crystal = LoadTexture("assets/textures/collectables/crystal_gold.png");
   Texture2D purple_crystal = LoadTexture("assets/textures/collectables/crystal_purple.png");
+
+  int crystal_X[10];
+  int crystal_Y[10];
+
+  for (int i = 0; i < 10; i++) {
+    crystal_X[i] = rand() % GetScreenWidth() - player_idle.width;
+    crystal_Y[i] = rand() % GetScreenHeight() - player_idle.height;
+  }
 
 
     int x = (GetScreenWidth() / 2) - (player_idle.width / 2);
@@ -113,6 +127,15 @@ int main() {
         );
 
         DrawTexture(player_idle, x, y, WHITE);
+        for (int i = 0; i < 6; i++) {
+          DrawTexture(blue_crystal, crystal_X[i], crystal_Y[i], WHITE);
+        }
+        for (int i = 6; i < 8; i++) {
+          DrawTexture(gold_crystal, crystal_X[i], crystal_Y[i], WHITE);
+        }
+        for (int i = 8; i < 10; i++) {
+          DrawTexture(purple_crystal, crystal_X[i], crystal_Y[i], WHITE);
+        }
 
         break;
 

@@ -15,7 +15,7 @@ int main() {
 
   // SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WIDTH, HEIGHT, "Crystal Collector");
-  SetTargetFPS(40);
+  SetTargetFPS(50);
 
   //menu
   Texture2D menu_bg = LoadTexture("assets/textures/backgrounds/menu_bg.png");
@@ -35,16 +35,19 @@ int main() {
   // play mode textures
   Texture2D player_idle = LoadTexture("assets/textures/player/idle.png");
   Texture2D player_walk = LoadTexture("assets/textures/player/idle.png");
-  Texture2D blue_crystal = LoadTexture("assets/textures/collectables/crystal_blue.png");
-  Texture2D gold_crystal = LoadTexture("assets/textures/collectables/crystal_gold.png");
-  Texture2D purple_crystal = LoadTexture("assets/textures/collectables/crystal_purple.png");
+  const int AMOUNT = 10;
+  Texture2D crystal[AMOUNT];
 
-  int crystal_X[10];
-  int crystal_Y[10];
+  int crystal_X[AMOUNT];
+  int crystal_Y[AMOUNT];
 
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < AMOUNT; i++) {
     crystal_X[i] = rand() % GetScreenWidth() - player_idle.width;
     crystal_Y[i] = rand() % GetScreenHeight() - player_idle.height;
+
+    if (i < 10) crystal[i] = LoadTexture("assets/textures/collectables/crystal_purple.png");
+    if (i < 8) crystal[i] = LoadTexture("assets/textures/collectables/crystal_gold.png");
+    if (i < 6) crystal[i] = LoadTexture("assets/textures/collectables/crystal_blue.png");
   }
 
 
@@ -131,14 +134,8 @@ int main() {
         );
 
         DrawTexture(player_idle, x, y, WHITE);
-        for (int i = 0; i < 6; i++) {
-          DrawTexture(blue_crystal, crystal_X[i], crystal_Y[i], WHITE);
-        }
-        for (int i = 6; i < 8; i++) {
-          DrawTexture(gold_crystal, crystal_X[i], crystal_Y[i], WHITE);
-        }
-        for (int i = 8; i < 10; i++) {
-          DrawTexture(purple_crystal, crystal_X[i], crystal_Y[i], WHITE);
+        for (int i = 0; i < AMOUNT; i++) {
+          DrawTexture(crystal[i], crystal_X[i], crystal_Y[i], WHITE);
         }
 
         break;
@@ -191,9 +188,7 @@ int main() {
     EndDrawing();
   }
 
-  UnloadTexture(purple_crystal);
-  UnloadTexture(gold_crystal);
-  UnloadTexture(blue_crystal);
+  for (int i = 0; i < AMOUNT; i++) UnloadTexture(crystal[i]);
   UnloadTexture(player_walk);
   UnloadTexture(player_idle);
   UnloadTexture(credits_title);

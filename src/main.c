@@ -4,6 +4,7 @@ int main() {
   const int WIDTH = 1024;
   const int HEIGHT = 576;
   bool run = true;
+  bool playing = false;
   int state = 0;
 
   // SetConfigFlags(FLAG_WINDOW_RESIZABLE);
@@ -25,6 +26,10 @@ int main() {
   Texture2D credits = LoadTexture("assets/textures/ui/dashboards/credits.png");
   Texture2D credits_title = LoadTexture("assets/textures/ui/titles/credits_txt.png");
 
+  // play mode textures
+  Texture2D player_idle = LoadTexture("assets/textures/player/idle.png");
+  Texture2D player_walk = LoadTexture("assets/textures/player/idle.png");
+
   while (run) {
     int maxwidth = GetScreenWidth();
     int maxheight = GetScreenHeight();
@@ -32,14 +37,16 @@ int main() {
     BeginDrawing();
     ClearBackground(BLACK);
 
+    if (!playing) {
     DrawTexturePro(
-      menu_bg,
-      (Rectangle){ 0, 0, menu_bg.width, menu_bg.height }, 
-      (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() },
-      (Vector2){ 0, 0 },  
-      0.0f,              
-      GRAY             
-    );
+        menu_bg,
+        (Rectangle){ 0, 0, menu_bg.width, menu_bg.height }, 
+        (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() },
+        (Vector2){ 0, 0 },  
+        0.0f,              
+        GRAY             
+      );
+    }
 
     if (state == 0) {
     DrawTexture(title, (maxwidth / 2) - (title.width / 2), 20, WHITE);
@@ -82,6 +89,16 @@ int main() {
 
     switch (state) {
       case 1:
+        playing = true;
+        DrawRectangle(
+          0, 0,
+          GetScreenWidth(), 
+          GetScreenHeight(),
+          GREEN             
+        );
+
+        DrawTexture(player_idle, x - (player_idle.width /2), y - (player_idle.height / 2), WHITE);
+
         break;
 
       case 2:
@@ -132,6 +149,9 @@ int main() {
     EndDrawing();
   }
 
+  UnloadTexture(player_idle);
+  UnloadTexture(credits_title);
+  UnloadTexture(credits);
   for (int i = 0; i < 5; i++) UnloadTexture(buttons[i]);
   UnloadTexture(title);
   UnloadTexture(menu_bg);

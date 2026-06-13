@@ -117,6 +117,7 @@ int main() {
             0.0f,              
             (Color){ 0, 255, 255, 255 }
             );
+          if (clicked) state = 0;
         } else {
           DrawTexture(buttons[4], x, y, WHITE);
         }

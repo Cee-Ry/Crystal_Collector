@@ -9,6 +9,7 @@ int main() {
   bool playing = false;
   int state = 0;
   int printed_crytal = 0;
+  int score = 0;
 
   // seed for rand()
   srand(time(NULL));
@@ -62,50 +63,50 @@ int main() {
     ClearBackground(BLACK);
 
     if (!playing) {
-    DrawTexturePro(
-        menu_bg,
-        (Rectangle){ 0, 0, menu_bg.width, menu_bg.height }, 
-        (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() },
-        (Vector2){ 0, 0 },  
-        0.0f,              
-        GRAY             
-      );
-    }
-
-    if (state == 0) {
-    DrawTexture(title, (maxwidth / 2) - (title.width / 2), 20, WHITE);
-    char *msg = "2nd GUI Project! Version 0.3.1";
-    DrawText(msg, (GetScreenWidth() / 2) - (MeasureText(msg, 20) / 2), title.height + 28, 20, WHITE);
-    
-    int distance = 0;
-    for (int i = 0; i < 4; i++) {
-      int x = (maxwidth / 2) - (buttons[i].width / 2);
-      int y = maxheight - (90 * 4) + distance;
-
-      Rectangle bounds = { x, y, buttons[i].width, buttons[i].height };
-      bool hovered = CheckCollisionPointRec(GetMousePosition(), bounds);
-      bool clicked = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
-
-      if (hovered) {
-        DrawTexturePro(
-          buttons[i],
-          (Rectangle){ 0, 0, buttons[i].width, buttons[i].height}, 
-          (Rectangle){ x - 8, y - 8, buttons[i].width + 16, buttons[i].height + 16}, 
+      DrawTexturePro(
+          menu_bg,
+          (Rectangle){ 0, 0, menu_bg.width, menu_bg.height }, 
+          (Rectangle){ 0, 0, GetScreenWidth(), GetScreenHeight() },
           (Vector2){ 0, 0 },  
           0.0f,              
-          (Color){ 0, 255, 255, 255 }
-          );
-
-        if (clicked && i == 0) state = 1;
-        if (clicked && i == 1) state = 2;
-        if (clicked && i == 2) state = 3;
-        else if (clicked && i == 3) state = 4;
-      } else {
-        DrawTexture(buttons[i], x, y, WHITE);
+          GRAY             
+        );
       }
-        
-      distance += 90;
-    }
+
+      if (state == 0) {
+      DrawTexture(title, (maxwidth / 2) - (title.width / 2), 20, WHITE);
+      char *msg = "2nd GUI Project! Version 0.3.1";
+      DrawText(msg, (GetScreenWidth() / 2) - (MeasureText(msg, 20) / 2), title.height + 28, 20, WHITE);
+      
+      int distance = 0;
+      for (int i = 0; i < 4; i++) {
+        int x = (maxwidth / 2) - (buttons[i].width / 2);
+        int y = maxheight - (90 * 4) + distance;
+
+        Rectangle bounds = { x, y, buttons[i].width, buttons[i].height };
+        bool hovered = CheckCollisionPointRec(GetMousePosition(), bounds);
+        bool clicked = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+
+        if (hovered) {
+          DrawTexturePro(
+            buttons[i],
+            (Rectangle){ 0, 0, buttons[i].width, buttons[i].height}, 
+            (Rectangle){ x - 8, y - 8, buttons[i].width + 16, buttons[i].height + 16}, 
+            (Vector2){ 0, 0 },  
+            0.0f,              
+            (Color){ 0, 255, 255, 255 }
+            );
+
+          if (clicked && i == 0) state = 1;
+          if (clicked && i == 1) state = 2;
+          if (clicked && i == 2) state = 3;
+          else if (clicked && i == 3) state = 4;
+        } else {
+          DrawTexture(buttons[i], x, y, WHITE);
+        }
+          
+        distance += 90;
+      }
     }
 
     switch (state) {
@@ -134,10 +135,35 @@ int main() {
         );
 
         DrawTexture(player_idle, x, y, WHITE);
+        DrawText(TextFormat("Score: %i", score), 20, 20, 20, WHITE);
+
         for (int i = 0; i < AMOUNT; i++) {
           DrawTexture(crystal[i], crystal_X[i], crystal_Y[i], WHITE);
-        }
 
+          // if blue 1 pts, gold 3 pts and purple 5 pts
+          if (i > 7 && CheckCollisionRecs(
+            (Rectangle){x, y, player_idle.width, player_idle.height},
+            (Rectangle){crystal_X[i], crystal_Y[i], crystal[i].width, crystal[i].height}
+          )) {
+            score += 5;
+            crystal_X[i] = -100;
+            crystal_Y[i] = -100;
+          } else if (i > 5 && CheckCollisionRecs(
+            (Rectangle){x, y, player_idle.width, player_idle.height},
+            (Rectangle){crystal_X[i], crystal_Y[i], crystal[i].width, crystal[i].height}
+          )) {
+            score += 3;
+            crystal_X[i] = -100;
+            crystal_Y[i] = -100;
+          } else if (CheckCollisionRecs(
+            (Rectangle){x, y, player_idle.width, player_idle.height},
+            (Rectangle){crystal_X[i], crystal_Y[i], crystal[i].width, crystal[i].height}
+          )) {
+            score += 1;
+            crystal_X[i] = -100;
+            crystal_Y[i] = -100;
+          }
+        }
         break;
 
       case 2:

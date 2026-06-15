@@ -55,7 +55,7 @@ int main() {
     int x = (GetScreenWidth() / 2) - (player_idle.width / 2);
     int y = (GetScreenHeight() / 2) - (player_idle.height / 2);
 
-  while (run) {
+  while (!WindowShouldClose() && run) {
     int maxwidth = GetScreenWidth();
     int maxheight = GetScreenHeight();
 

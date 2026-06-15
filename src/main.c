@@ -98,7 +98,7 @@ int main() {
             );
 
           if (clicked && i == 0) state = 1;
-          if (clicked && i == 1) state = 2;
+          // if (clicked && i == 1) state = 2;
           if (clicked && i == 2) state = 3;
           else if (clicked && i == 3) state = 4;
         } else {

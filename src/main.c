@@ -14,7 +14,7 @@ int main() {
   // seed for rand()
   srand(time(NULL));
 
-  // SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+  SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(WIDTH, HEIGHT, "Crystal Collector");
   SetTargetFPS(50);
 
@@ -75,7 +75,7 @@ int main() {
 
       if (state == 0) {
       DrawTexture(title, (maxwidth / 2) - (title.width / 2), 20, WHITE);
-      char *msg = "2nd GUI Project! Version 0.3.1";
+      char *msg = "2nd GUI Project! Version 0.8.2";
       DrawText(msg, (GetScreenWidth() / 2) - (MeasureText(msg, 20) / 2), title.height + 28, 20, WHITE);
       
       int distance = 0;
